@@ -7,7 +7,7 @@
 
 <div align="center">
 <div>
-    <h1> 🍴 Mat.ZIP ( 맛집 지도 만들기 ) </h1>
+    <h1> 🍴 Mat.ZIP ( 맛집 지도 만들기 ) .v2</h1>
 
 [<img src="https://img.shields.io/badge/-matzip.site-purple?style=flat&logo=google-chrome&logoColor=white" />](https://matzip.site)
 [<img src="https://img.shields.io/badge/-Mat.ZiP Notion-blue?style=flat&logo=google-chrome&logoColor=white" />](https://www.notion.so/MatZIP-MZ-2739bdf0a306410a831bbfc5128c437d)
@@ -38,9 +38,8 @@
 
 #### 5. [**UCC 영상**](#ucc-영상)
 
-#### 6. [**프로젝트 기간**](#프로젝트-기간)
+#### 6. [**리팩토링 기간**](#리팩토링-기간)
 
-#### 7. [**팀원 소개**](#팀원-소개)
 
 <br />
 
@@ -135,22 +134,10 @@
 
 <br />
 
-# 📅 프로젝트 기간
+# 📅 리팩토링 기간
 
-**2023.06.19(월) ~ 2023.07.14(금)**
+**2025.01.26(일) ~ **
 
 <br />
 
-# 👪팀원 소개
-
-|                                                 Backend                                                  |                                   Backend                                    |                                 Backend                                 |                                 Backend                                  |                                  Backend                                  |
-|:--------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------:|:-----------------------------------------------------------------------:|:------------------------------------------------------------------------:|:-------------------------------------------------------------------------:|
-| <img src="https://github.com/HeegwonJo.png" width="120" height="120" /> | <img src="https://github.com/Genie16-github.png" width="120" height="120" /> | <img src="https://github.com/JunTaeINC.png" width="120" height="125" /> | <img src="https://github.com/siwookim97.png" width="120" height="120" /> | <img src="https://github.com/heeyeon3050.png" width="120" height="120" /> |
-| [조희권](https://github.com/HeegwonJo) | [이재범](https://github.com/Genie16-github) | [김준태](https://github.com/JunTaeINC) | [김시우](https://github.com/siwookim97) |  [김희연](https://github.com/heeyeon3050)  |
-
-- 조희권(팀장 / BE) : 프로젝트 총괄, 지도, 맛집
-- 이재범(팀원 / BE) : 인프라 구축 및 CI/CD, 친구, 알림
-- 김준태(팀원 / BE) : 리뷰, 댓글, 포인트
-- 김시우(팀원 / BE) : 회원, S3 이미지 업로드, 뱃지
-- 김희연(팀원 / BE) : 지도
 
