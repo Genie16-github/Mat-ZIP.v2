@@ -1,6 +1,7 @@
 # 빌드 스테이지
 FROM gradle:7.4-jdk17-alpine AS build
 ARG GRADLE_USER_HOME="/gradle-cache/.gradle"
+ARG SKIP_TESTS="false"
 ENV GRADLE_USER_HOME="${GRADLE_USER_HOME}"
 WORKDIR /app
 RUN mkdir -p "${GRADLE_USER_HOME}"
