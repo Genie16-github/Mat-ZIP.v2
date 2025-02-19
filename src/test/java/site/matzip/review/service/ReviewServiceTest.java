@@ -31,11 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 
-//@SpringBootTest
-//@Transactional
-//@ActiveProfiles("test")
-//@ExtendWith(MockitoExtension.class)
-//class ReviewServiceTest {
+@SpringBootTest
+@Transactional
+@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
+class ReviewServiceTest {
 //    private Member testUser;
 //    private Matzip matzip;
 //    @Autowired
@@ -204,4 +204,4 @@ import static org.mockito.Mockito.*;
 //
 //        assertThat(review.getHearts()).isEmpty();
 //    }
-//}
+}
