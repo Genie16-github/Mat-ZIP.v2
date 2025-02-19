@@ -1,0 +1,20 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 푸시될 때 실행됨
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: SSH로 EC2 서버에 접속하여 자동 배포 실행
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          /home/ubuntu/deploy.sh
