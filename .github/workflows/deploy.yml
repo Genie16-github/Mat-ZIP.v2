@@ -1,20 +1,27 @@
-name: Deploy to EC2
+name: 🚀 Deploy to EC2
 
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시될 때 실행됨
+      - main  # 🚨 배포할 브랜치 확인 후 수정!
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH로 EC2 서버에 접속하여 자동 배포 실행
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          /home/ubuntu/deploy.sh
+      - name: 🔑 GitHub Secrets에서 SSH Key 확인
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" | wc -c  # SSH Key 길이를 출력해서 확인
+          echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+          cat private_key.pem | head -5  # SSH 키의 일부를 출력해서 정상적으로 로드되었는지 확인
+
+      - name: 🚀 SSH로 EC2 서버에 접속하여 자동 배포 실행
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            /home/ubuntu/deploy.sh
