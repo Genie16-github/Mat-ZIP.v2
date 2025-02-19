@@ -10,12 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔑 GitHub Secrets에서 SSH Key 확인
+      - name: 🔑 GitHub Secrets에서 SSH Key 저장 및 확인
         run: |
-          echo "${{ secrets.EC2_SSH_KEY }}" | wc -c  # SSH Key 길이를 출력해서 확인
-          echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-          cat private_key.pem | head -5  # SSH 키의 일부를 출력해서 정상적으로 로드되었는지 확인
+          echo "${{ secrets.EC2_SSH_KEY }}" | sed 's/\r$//' > private_key.pem  # SSH 키 저장
+          chmod 600 private_key.pem  # SSH 키 권한 설정
+          cat private_key.pem | head -5  # SSH 키 일부 확인
 
       - name: 🚀 SSH로 EC2 서버에 접속하여 자동 배포 실행
         uses: appleboy/ssh-action@v0.1.6
