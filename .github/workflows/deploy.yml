@@ -16,7 +16,7 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" | sed 's/\r$//' > private_key.pem  # 개행 문자 제거 후 저장
           chmod 600 private_key.pem  # SSH 키 권한 설정
           ls -l private_key.pem  # 파일 존재 여부 확인
-          cat private_key.pem | head -5  # SSH 키 일부 출력 (비어있는지 확인)
+          cat private_key.pem | head -5  # SSH 키 일부 출력
 
       - name: 🚀 SSH로 EC2 서버에 접속하여 자동 배포 실행
         uses: appleboy/ssh-action@v0.1.6
