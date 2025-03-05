@@ -39,6 +39,7 @@ public class SecurityConfig {
                                 .userService(principalOAuth2UserService) // OAuth2.0 로그인을 성공하면 해당 service 실행
                                 .and()
                                 .defaultSuccessUrl("/main")
+                                .failureUrl("/login?error=true") // 로그인 실패 시 이동할 URL 설정
                 )
                 .logout()
         ;

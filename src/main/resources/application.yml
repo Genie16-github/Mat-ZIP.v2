@@ -30,8 +30,11 @@ server:
     use-relative-redirects: true
 logging.level:
   org.hibernate.SQL: debug
+  org.springframework.security: DEBUG
+  org.springframework.web: DEBUG
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+
