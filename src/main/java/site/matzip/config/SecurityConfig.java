@@ -77,7 +77,7 @@ public class SecurityConfig {
         return (request, response, exception) -> {
             exception.printStackTrace(); // 콘솔에 오류 출력
             String encodedMessage = URLEncoder.encode(exception.getMessage(), StandardCharsets.UTF_8);
-            response.sendRedirect("/login?error=true&message=" + exception.getMessage());
+            response.sendRedirect("/login?error=true&message=" + encodedMessage);
         };
     }
 }
