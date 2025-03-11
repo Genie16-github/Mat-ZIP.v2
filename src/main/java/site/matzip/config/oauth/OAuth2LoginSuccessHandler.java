@@ -12,6 +12,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -30,18 +32,22 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 oauthToken.getName()
         );
 
-        if (client != null) {
+        if (client != null && client.getAccessToken() != null) {
             String accessToken = client.getAccessToken().getTokenValue();
+            System.out.println("로그인 성공! access_token: " + accessToken);
 
-            // ✅ `access_token`을 `HttpOnly Cookie`로 저장
+            // 'access_token'을 'HttpOnly Cookie'로 저장
             Cookie accessTokenCookie = new Cookie("access_token", accessToken);
             accessTokenCookie.setHttpOnly(true);
             accessTokenCookie.setSecure(true);
             accessTokenCookie.setPath("/");
-            accessTokenCookie.setMaxAge(6 * 60 * 60); // 6시간 유효
+            accessTokenCookie.setMaxAge(6 * 60 * 60);
 
             response.addCookie(accessTokenCookie);
-            System.out.println("✅ 로그인 성공! access_token: " + accessToken);
+        } else {
+            System.out.println("OAuth2 로그인 성공했지만, access_token을 찾을 수 없음!");
+            response.sendRedirect("/login?error=true&message=" + URLEncoder.encode("Access token not found", StandardCharsets.UTF_8));
+            return;
         }
 
         response.sendRedirect("/main");
