@@ -34,7 +34,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // 필요시 CSRF 활성화
+//                .csrf(AbstractHttpConfigurer::disable) // 필요시 CSRF 활성화
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .formLogin(
                         formLogin -> formLogin
