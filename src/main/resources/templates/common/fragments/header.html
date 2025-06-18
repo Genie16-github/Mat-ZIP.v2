@@ -13,10 +13,13 @@
                href="/oauth2/authorization/kakao">로그인</a>
             <a sec:authorize="isAuthenticated()"
                class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
+               href="/matzip">맛지도</a>
+            <a sec:authorize="isAuthenticated()"
+               class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
                href="/ranking">랭킹</a>
             <a sec:authorize="isAuthenticated()"
                class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
-               href="/usr/member/myPage">마이 페이지</a>
+               href="/usr/member/myPage">마이페이지</a>
             <a sec:authorize="isAuthenticated()"
                class="btn btn-ghost rounded-btn bg-transparent text-blue-800 font-bold dark:bg-transparent dark:text-blue-800"
                href="javascript:"
@@ -48,15 +51,18 @@
                        href="/oauth2/authorization/kakao">로그인</a></li>
                 <li><a sec:authorize="isAuthenticated()"
                        class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
+                       href="/matzip">맛지도</a></li>
+                <li><a sec:authorize="isAuthenticated()"
+                       class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
                        href="/ranking">랭킹</a></li>
                 <li><a sec:authorize="isAuthenticated()"
                        class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
-                       href="/usr/member/myPage">마이 페이지</a></li>
+                       href="/usr/member/myPage">마이페이지</a></li>
                 <li><a sec:authorize="isAuthenticated()"
                        class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
                        href="javascript:"
                        onclick="$(this).next().submit();">로그아웃</a>
-                <form class="!hidden" hidden th:action="|/usr/member/logout|" method="POST"></form></li>
+                    <form class="!hidden" hidden th:action="|/usr/member/logout|" method="POST"></form></li>
             </ul>
         </div>
     </div>

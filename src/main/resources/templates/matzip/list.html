@@ -57,25 +57,6 @@
 <body th:data-user-id="${memberId}">
 <main layout:fragment="Content">
     <div class="mx-auto max-w-screen-2xl">
-        <div class="flex flex-shrink-0 btn-group justify-end">
-            <div class="btn-group rounded-md border border-blue-200 mb-2">
-                <button class="btn-sm bg-blue-800 text-white rounded-md py-1 px-3 space-x-2 mr-2"
-                        data-list-type="all"
-                        id="listBtnAll"
-                        onclick="toggleList('all')">
-                    ALL
-                    <span class="loading loading-spinner-sm inline" id="listSpinnerAll" style="display: none;"></span>
-                </button>
-
-                <button class="btn-sm rounded-md py-1 px-3 space-x-2"
-                        data-list-type="my"
-                        id="listBtnMy"
-                        onclick="toggleList('my')">
-                    MY
-                    <span class="loading loading-spinner-sm inline" id="listSpinnerMy" style="display: none;"></span>
-                </button>
-            </div>
-        </div>
         <div class="flex justify-end space-x-4">
             <input class="input input-bordered w-full max-w-xs border-2 border-blue-800"
                    id="searchInput"
@@ -97,10 +78,6 @@
                 검색
             </button>
 
-            <button class="btn bg-blue-800 hover:bg-blue-500 text-white py-1 px-3" id="matzipCreationButton"
-                    onclick="goToMatzipCreationPage()">
-                맛집 등록
-            </button>
         </div>
         <div class="mt-3" id="map">
             <div id="placeInfo">
@@ -186,8 +163,8 @@
         var currentInfoWindow = null;
         var markers = [];
         var nonFilteredData;
-        let currentListType = "all";
-        let currentReviewsType = "all";
+        let currentListType = "my";
+        let currentReviewsType = "my";
         var currentReviews = [];
         let currentMatzipId = null; // 이전에 클릭한 마커의 맛집 아이디
 
@@ -239,14 +216,9 @@
             }
         }
 
-        const storedListType = localStorage.getItem("current_list_type");
-        if (storedListType === "my") {
-            // 현재 리스트 타입이 'my'인 경우, 나의 리스트를 로드합니다.
-            toggleList("my");
-        } else {
-            // 현재 리스트 타입이 'all'이거나 저장된 값이 없는 경우, 전체 리스트를 로드합니다.
-            toggleList("all");
-        }
+        // 나의 맛집 지도를 로드합니다.
+        loadMyMap("my");
+
 
         function showInfoWindow(marker, matzip) {
             let averageRating = matzip.averageRating.toFixed(2); // 소수점 두 자리까지 반올림하여 표시
@@ -502,44 +474,12 @@
             });
         }
 
-        // 리스트 타입 토글 함수
-        function toggleList(listType) {
-            const listBtnAll = document.getElementById("listBtnAll");
-            const listBtnMy = document.getElementById("listBtnMy");
+        //리스트 타입 토글 함수
+        function loadMyMap(listType) {
 
             localStorage.setItem("current_list_type", listType);
 
-            if (listType === "all") {
-                // 나의 리스트 불러오기
-                loadMatzipList("/matzip/api/list", () => {
-                    // 리스트 버튼 스피너를 숨깁니다
-                    document.getElementById("listSpinnerMy").style.display = "none";
-                    // 버튼 활성화/비활성화 클래스 토글
-
-                    listBtnAll.classList.add("bg-blue-800", "text-white");
-                    listBtnMy.classList.remove("bg-blue-800", "text-white");
-                    currentListType = 'all'
-                });
-            } else {
-                // 전체 리스트 불러오기
-                loadMatzipList("/matzip/api/mylist", () => {
-                    // 리스트 버튼 스피너를 숨깁니다
-                    document.getElementById("listSpinnerAll").style.display = "none";
-                    // 버튼 활성화/비활성화 클래스 토글
-                    listBtnAll.classList.remove("bg-blue-800", "text-white");
-                    listBtnMy.classList.add("bg-blue-800", "text-white");
-                    currentListType = 'my'
-                });
-            }
-        }
-
-        function goToMatzipCreationPage() {
-            if (!isLoggedIn()) {
-                toastWarning("로그인 후 이용해주세요");
-                return;
-            }
-            window.location.href = '/matzip/create';
-        };
+            loadMatzipList("/matzip/api/mylist");
 
         //조건에 맞게 검색
         function filterByNameOrType(searchName, searchType) {
@@ -651,14 +591,7 @@
 
         //리뷰 불러오기 (서버에 요청)
         function loadReviews(matzipId, pageNumber, pageSize) {
-            let url = '';
-            if (currentListType === 'all') {
-                url = `/review/api/list/${matzipId}`;
-                currentReviewsType = 'all';
-            } else if (currentListType === 'my') {
-                url = `/review/api/mylist/${matzipId}`;
-                currentReviewsType = 'my';
-            }
+            let url = `/review/api/mylist/${matzipId}`;
             url += `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
             fetch(url)
@@ -850,6 +783,7 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            }
         }
     </script>
 </main>

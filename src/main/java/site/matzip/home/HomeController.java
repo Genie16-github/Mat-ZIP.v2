@@ -30,6 +30,15 @@ public class HomeController {
             model.addAttribute("memberId", principalDetails.getUserId());
         }
 
+        return "matzip/create";
+    }
+
+    @GetMapping("/matzip")
+    public String showMyMap(Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        if (principalDetails != null) {
+            model.addAttribute("memberId", principalDetails.getUserId());
+        }
+
         return "matzip/list";
     }
 
