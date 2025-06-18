@@ -128,7 +128,7 @@ function showMovetoMainConfirmDialog(msg, callback) {
         showCancelButton: true,
         confirmButtonColor: '#2e3bc0',
         cancelButtonColor: '#6dd2ce',
-        confirmButtonText: '지도로 이동',
+        confirmButtonText: '맛지도로 이동',
         cancelButtonText: '계속 등록',
         reverseButtons: true, // 버튼 순서 거꾸로
     }).then((result) => {

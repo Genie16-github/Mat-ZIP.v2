@@ -509,11 +509,11 @@
                     })
                         .then(response => {
                             if (response.ok) {
-                                //세션스토리지에 지금 등록한 맛집 위치 저장
+                                // 세션스토리지에 지금 등록한 맛집 위치 저장
                                 sessionStorage.setItem("x", matzipCreationDTO.x);
                                 sessionStorage.setItem("y", matzipCreationDTO.y);
                                 showMovetoMainConfirmDialog("맛집이 등록되었습니다.", () => {
-                                    window.location.href = "/main"; // 메인 페이지로 이동
+                                    window.location.href = "/matzip"; // 내 맛지도로 이동
                                 });
                             } else {
                                 alert('맛집 등록에 실패했습니다.');

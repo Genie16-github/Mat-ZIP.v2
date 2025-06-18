@@ -56,28 +56,34 @@
 </head>
 <body th:data-user-id="${memberId}">
 <main layout:fragment="Content">
-    <div class="mx-auto max-w-screen-2xl">
-        <div class="flex justify-end space-x-4">
-            <input class="input input-bordered w-full max-w-xs border-2 border-blue-800"
-                   id="searchInput"
-                   placeholder="맛집 이름, 주소로 검색" type="text">
-            <select class="rounded-md py-1 px-3 border-2 border-blue-800 focus:ring-2 focus:ring-blue-600"
-                    id="matzipTypeSelect">
-                <option value="ALL">전체</option>
-                <option value="KOREAN">한식</option>
-                <option value="JAPANESE">회/일식</option>
-                <option value="CHINESE">중식</option>
-                <option value="WESTERN">양식</option>
-                <option value="ASIAN">아시안</option>
-                <option value="BAR">술집</option>
-                <option value="CAFE">카페</option>
-                <option value="ETC">기타</option>
-            </select>
-            <button class="btn bg-blue-800 hover:bg-blue-500 rounded-md py-1 px-3 text-white" id="filterBtn"
-                    onclick="search()">
-                검색
+    <div class="mx-auto max-w-screen-2xl p-0">
+        <div class="flex justify-between items-center m-0 p-0">
+            <button class="bg-blue-800 hover:bg-blue-500 text-white px-4 text-sm rounded h-8" id="matzipCreationButton"
+                    onclick="goToMatzipCreationPage()">
+                맛집 등록하러 가기
             </button>
 
+            <div class="flex space-x-4 items-center m-0 p-0">
+                <input class="border-2 border-blue-800 rounded px-3 text-sm h-8 w-64"
+                       id="searchInput"
+                       placeholder="맛집 이름, 주소로 검색" type="text">
+                <select class="border-2 border-blue-800 rounded px-3 text-sm h-8 focus:ring-2 focus:ring-blue-600"
+                        id="matzipTypeSelect">
+                    <option value="ALL">전체</option>
+                    <option value="KOREAN">한식</option>
+                    <option value="JAPANESE">회/일식</option>
+                    <option value="CHINESE">중식</option>
+                    <option value="WESTERN">양식</option>
+                    <option value="ASIAN">아시안</option>
+                    <option value="BAR">술집</option>
+                    <option value="CAFE">카페</option>
+                    <option value="ETC">기타</option>
+                </select>
+                <button class="bg-blue-800 hover:bg-blue-500 rounded-md px-3 text-white h-8 text-sm" id="filterBtn"
+                        onclick="search()">
+                    검색
+                </button>
+            </div>
         </div>
         <div class="mt-3" id="map">
             <div id="placeInfo">
@@ -216,9 +222,7 @@
             }
         }
 
-        // 나의 맛집 지도를 로드합니다.
         loadMyMap("my");
-
 
         function showInfoWindow(marker, matzip) {
             let averageRating = matzip.averageRating.toFixed(2); // 소수점 두 자리까지 반올림하여 표시
@@ -476,10 +480,18 @@
 
         //리스트 타입 토글 함수
         function loadMyMap(listType) {
-
             localStorage.setItem("current_list_type", listType);
 
             loadMatzipList("/matzip/api/mylist");
+        }
+
+        function goToMatzipCreationPage() {
+            if (!isLoggedIn()) {
+                toastWarning("로그인 후 이용해주세요");
+                return;
+            }
+            window.location.href = '/matzip/create';
+        };
 
         //조건에 맞게 검색
         function filterByNameOrType(searchName, searchType) {
@@ -592,6 +604,7 @@
         //리뷰 불러오기 (서버에 요청)
         function loadReviews(matzipId, pageNumber, pageSize) {
             let url = `/review/api/mylist/${matzipId}`;
+
             url += `?pageNumber=${pageNumber}&pageSize=${pageSize}`;
 
             fetch(url)
@@ -783,7 +796,6 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            }
         }
     </script>
 </main>
