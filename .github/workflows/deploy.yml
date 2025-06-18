@@ -1,28 +1,32 @@
-name: 🚀 Deploy to EC2
+name : Auto Deploy to EC2
 
 on:
   push:
-    branches:
-      - main  # 🚨 배포할 브랜치 확인 후 수정!
-
+    branches: main
+  workflow_dispatch:
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔑 GitHub Secrets에서 SSH Key 저장 및 확인
-        run: |
-          echo "🔍 Checking if SSH Key is loaded..."
-          echo "${{ secrets.EC2_SSH_KEY }}" | sed 's/\r$//' > private_key.pem  # 개행 문자 제거 후 저장
-          chmod 600 private_key.pem  # SSH 키 권한 설정
-          ls -l private_key.pem  # 파일 존재 여부 확인
-          cat private_key.pem | head -5  # SSH 키 일부 출력
+      - name: Checkout source
+        uses: actions/checkout@v3
 
-      - name: 🚀 SSH로 EC2 서버에 접속하여 자동 배포 실행
-        uses: appleboy/ssh-action@v0.1.6
+      - name: Setup SSH for EC2
+        uses: webfactory/ssh-agent@v0.5.4
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            /home/ubuntu/deploy.sh
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@54.180.52.185 << 'EOF'
+            cd /home/ubuntu/Mat-ZIP.v2
+
+            # application-secret.yml 자동생성
+            echo "${{ secrets.APPLICATION_SECRET }}" > ./src/main/resources/application-secret.yml
+
+            git pull origin main
+            docker compose down
+            docker compose up -d --build
+          EOF
