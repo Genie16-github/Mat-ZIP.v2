@@ -117,7 +117,7 @@ Docker와 GitHub Actions, AWS EC2를 통해 **CI/CD 자동 배포 환경까지 �
 ## 📂프로젝트 구조
 
 ```bash
-Mat-ZIP/
+Mat-ZIP.v2/
 ├── src/
 │   ├── config/           # 설정 클래스
 │   ├── controller/       # REST API 엔드포인트
