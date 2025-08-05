@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.matzip.config.auth.PrincipalDetails;
 import site.matzip.member.domain.Member;
 import site.matzip.member.repository.MemberRepository;
 
@@ -23,9 +24,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("username(%s) not found".formatted(username)));
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(member.getRole().toString()));
-        return new User(member.getUsername(), member.getPassword(), authorities);
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("username(%s) not found".formatted(username)));
+
+        return new PrincipalDetails(member, null);
     }
 }
