@@ -10,7 +10,7 @@
         <div class="flex h-full items-center justify-center hidden sm:block">
             <a sec:authorize="isAnonymous()"
                class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
-               href="/oauth2/authorization/kakao">로그인</a>
+               href="/usr/member/login">로그인</a>
             <a sec:authorize="isAuthenticated()"
                class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
                href="/matzip">맛지도</a>
@@ -48,7 +48,7 @@
                 class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40 right-0">
                 <li><a sec:authorize="isAnonymous()"
                        class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
-                       href="/oauth2/authorization/kakao">로그인</a></li>
+                       href="/usr/member/login">로그인</a></li>
                 <li><a sec:authorize="isAuthenticated()"
                        class="btn btn-ghost rounded-btn bg-transparent text-blue-800 dark:bg-transparent dark:text-blue-800"
                        href="/matzip">맛지도</a></li>
