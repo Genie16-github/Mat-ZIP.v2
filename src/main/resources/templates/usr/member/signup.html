@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html layout:decorate="~{common/layout/defaultLayout.html}">
+<head>
+    <meta charset="utf-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <!-- 테일윈드 불러오기 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 데이지 UI 불러오기 -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+
+<main layout:fragment="Content">
+    <script>
+        function SignUpForm__submit(form) {
+            const pw = form.password.value;
+            const pwConfirm = form.passwordConfirm.value;
+            if (pw !== pwConfirm) {
+                alert("❌ 비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <div class="flex justify-center items-center">
+        <div class="max-w-2xl w-full px-4">
+            <h1 class="mb-4">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>회원가입 페이지</span>
+            </h1>
+
+            <form th:action="@{/usr/member/signup}" method="POST" class="flex flex-col gap-6" onsubmit="return SignUpForm__submit(this);">
+                <th:block>
+                    <div class="form-control">
+                        <label class="label">
+                        <span class="label-text">
+                            <i class="fa-regular fa-id-badge"></i>
+                            <span th:text="유저id"></span>
+                        </span>
+                        </label>
+                        <div class="flex gap-2">
+                            <input type="text" name="username" id="username" class="input input-bordered flex-1"
+                                   placeholder="아이디 (4~16자)" required minlength="4" maxlength="16" />
+                        </div>
+                        <p id="username-check-result" class="text-sm mt-1"></p>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label"><span class="label-text"><i class="fa-solid fa-user"></i> 닉네임</span></label>
+                        <div class="flex gap-2">
+                            <input type="text" name="nickname" id="nickname" class="input input-bordered flex-1"
+                                   placeholder="닉네임 (2~20자)" required minlength="2" maxlength="20" />
+                        </div>
+                        <p id="nickname-check-result" class="text-sm mt-1"></p>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                        <span class="label-text">
+                            <i class="fa-solid fa-key"></i>
+                            <span th:text="패스워드"></span>
+                        </span>
+                        </label>
+                        <input type="password" name="password" id="password" class="input input-bordered"
+                               placeholder="8~20자 비밀번호" required minlength="8" maxlength="20" />
+                    </div>
+
+                    <!-- 비밀번호 확인 -->
+                    <div class="form-control">
+                        <label class="label"><span class="label-text"><i class="fa-solid fa-key"></i> 비밀번호 확인</span></label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" class="input input-bordered"
+                               placeholder="비밀번호 다시 입력" required minlength="8" maxlength="20" />
+                    </div>
+
+                    <!-- 이메일 -->
+                    <div class="form-control">
+                        <label class="label"><span class="label-text"><i class="fa-solid fa-envelope"></i> 이메일</span></label>
+                        <input type="email" name="email" class="input input-bordered" placeholder="이메일" required />
+                    </div>
+
+                    <!-- 가입 버튼 -->
+                    <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+                </th:block>
+
+                <a href="/oauth2/authorization/kakao" class="btn btn-block btn-outline gap-1">
+                    <i class="fa-solid fa-comment text-[color:#ffe812]"></i>
+                    <span class="normal-case">카카오 아이디로 로그인</span>
+                </a>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>
