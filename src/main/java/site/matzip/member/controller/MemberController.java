@@ -26,6 +26,7 @@ import site.matzip.review.dto.MyReviewDTO;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,6 +36,37 @@ public class MemberController {
     private final MemberService memberService;
     private final ProfileImageService profileImageService;
     private final Rq rq;
+
+    // 회원가입 페이지
+    @GetMapping("/signup")
+    public String signupForm() {
+        return "usr/member/signup";
+    }
+
+    @PostMapping("/signup")
+    public String signup(@RequestParam String username,
+                         @RequestParam String nickname,
+                         @RequestParam String password,
+                         @RequestParam String email) {
+
+        memberService.signUp(username, nickname, password, email);
+
+        return "redirect:/usr/member/login";
+    }
+
+    @GetMapping("/check-username")
+    @ResponseBody
+    public Map<String, Boolean> checkUsername(@RequestParam String username) {
+        boolean available = memberService.isUsernameAvailable(username);
+        return Map.of("available", available);
+    }
+
+    @GetMapping("/check-nickname")
+    @ResponseBody
+    public Map<String, Boolean> checkNickname(@RequestParam String nickname) {
+        boolean available = memberService.isNicknameAvailable(nickname);
+        return Map.of("available", available);
+    }
 
     @GetMapping("/login")
     public String login() {

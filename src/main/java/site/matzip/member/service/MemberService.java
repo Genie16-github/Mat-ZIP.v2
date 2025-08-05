@@ -154,6 +154,14 @@ public class MemberService {
         return member;
     }
 
+    public boolean isUsernameAvailable(String username) {
+        return !memberRepository.existsByUsername(username);
+    }
+
+    public boolean isNicknameAvailable(String nickname) {
+        return !memberRepository.existsByNickname(nickname);
+    }
+
     @Transactional
     public RsData<Member> modifyNickname(Member member, NicknameUpdateDTO nicknameUpdateDTO) {
         if (isNicknameTaken(nicknameUpdateDTO.getNickname())) {
