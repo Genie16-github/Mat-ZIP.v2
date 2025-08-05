@@ -13,7 +13,28 @@
 <body>
 
 <main layout:fragment="Content">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+        function checkUsername() {
+            const username = document.getElementById('username').value;
+            axios.get(`/usr/member/check-username?username=${encodeURIComponent(username)}`)
+                .then(res => {
+                    const el = document.getElementById('username-check-result');
+                    el.textContent = res.data.available ? "✅ 사용 가능한 아이디입니다." : "❌ 이미 사용 중입니다.";
+                    el.className = res.data.available ? "text-green-600" : "text-red-500";
+                });
+        }
+
+        function checkNickname() {
+            const nickname = document.getElementById('nickname').value;
+            axios.get(`/usr/member/check-nickname?nickname=${encodeURIComponent(nickname)}`)
+                .then(res => {
+                    const el = document.getElementById('nickname-check-result');
+                    el.textContent = res.data.available ? "✅ 사용 가능한 닉네임입니다." : "❌ 이미 사용 중입니다.";
+                    el.className = res.data.available ? "text-green-600" : "text-red-500";
+                });
+        }
+
         function SignUpForm__submit(form) {
             const pw = form.password.value;
             const pwConfirm = form.passwordConfirm.value;
@@ -44,6 +65,7 @@
                         <div class="flex gap-2">
                             <input type="text" name="username" id="username" class="input input-bordered flex-1"
                                    placeholder="아이디 (4~16자)" required minlength="4" maxlength="16" />
+                            <button type="button" class="btn btn-outline" onclick="checkUsername()">중복확인</button>
                         </div>
                         <p id="username-check-result" class="text-sm mt-1"></p>
                     </div>
@@ -53,6 +75,7 @@
                         <div class="flex gap-2">
                             <input type="text" name="nickname" id="nickname" class="input input-bordered flex-1"
                                    placeholder="닉네임 (2~20자)" required minlength="2" maxlength="20" />
+                            <button type="button" class="btn btn-outline" onclick="checkNickname()">중복확인</button>
                         </div>
                         <p id="nickname-check-result" class="text-sm mt-1"></p>
                     </div>
